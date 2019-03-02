@@ -1,11 +1,12 @@
 class star {
-   constructor(width, height) {
+   constructor(width, height, colours = true) {
         this.width = width;
         this.height = height;
         this.x = random(-this.width, this.width);
         this.y = random(-this.height, this.height);
         this.z = random(this.width);
-        this.pz = this.z;
+        this.transformedZ = this.z;
+        this.randomColor = colours ? color(random(255),random(255),random(255)) : color(255);
    }
 
    update() {
@@ -14,24 +15,24 @@ class star {
         this.x = random(-this.width, this.width);
         this.y = random(-this.height, this.height);
         this.z = random(this.width);
-        this.pz = this.z;
+        this.transformedZ = this.z;
     }
    }
 
    show() {
-    fill(255);
+    fill(this.randomColor);
     noStroke();
 
-    var sx = map(this.x / this.z, 0, 1, 0, this.width);
-    var sy = map(this.y / this.z, 0, 1, 0, this.height);
-    var r = map(this.z, 0, this.width, 16, 0);
+    var startX = map(this.x / this.z, 0, 1, 0, this.width);
+    var startY = map(this.y / this.z, 0, 1, 0, this.height);
+    var radius = map(this.z, 0, this.width, 16, 0);
 
-    ellipse(sx, sy, r, r);
-    var px = map(this.x / this.pz, 0, 1, 0, this.width);
-    var py = map(this.y / this.pz, 0, 1, 0, this.height);
+    ellipse(startX, startY, radius, radius);
+    var transformedX = map(this.x / this.transformedZ, 0, 1, 0, this.width);
+    var transformedY = map(this.y / this.transformedZ, 0, 1, 0, this.height);
 
-    this.pz = this.z;
+    this.transformedZ = this.z;
     stroke(255);
-    line(px, py, sx, sy);
+    line(transformedX, transformedY, startX, startY);
    }
 }
